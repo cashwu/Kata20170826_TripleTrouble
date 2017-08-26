@@ -19,6 +19,11 @@ namespace Kata20170826_TripleTrouble
             TripleDoubleShouldBe(1, 111, 113);
         }
 
+        [TestMethod]
+        public void input_222_221_should_return_1()
+        {
+            TripleDoubleShouldBe(1, 222, 221);
+        }
 
         private static void TripleDoubleShouldBe(int expected, int num1, int num2)
         {
@@ -32,9 +37,9 @@ namespace Kata20170826_TripleTrouble
     {
         public int TripleDouble(long num1, long num2)
         {
-            var num1IsTriple = num1.ToString().Count(a => char.GetNumericValue(a) == 1) == 3;
-            var num2IsDouble = num2.ToString().Count(a => char.GetNumericValue(a) == 1) == 2;
-            return num1IsTriple && num2IsDouble ? 1 : 0;
+            var tripleNumber = num1.ToString().GroupBy(char.GetNumericValue).FirstOrDefault(a => a.Count() == 3)?.Key;
+            var isTripleDouble = num2.ToString().Count(a => char.GetNumericValue(a) == tripleNumber) == 2;
+            return isTripleDouble ? 1 : 0;
         }
     }
 }
