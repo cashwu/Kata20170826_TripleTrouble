@@ -55,6 +55,12 @@ namespace Kata20170826_TripleTrouble
             TripleDoubleShouldBe(1, 10560002, 100);
         }
 
+        [TestMethod]
+        public void input_606423252_873741212_should_return_0()
+        {
+            TripleDoubleShouldBe(0, 606423252, 873741212);
+        }
+
         private static void TripleDoubleShouldBe(int expected, long num1, long num2)
         {
             var kata = new Kata();
@@ -67,8 +73,19 @@ namespace Kata20170826_TripleTrouble
     {
         public int TripleDouble(long num1, long num2)
         {
-            var tripleNumber = num1.ToString().GroupBy(char.GetNumericValue).FirstOrDefault(a => a.Count() >= 3)?.Key;
-            var isTripleDouble = num2.ToString().Count(a => char.GetNumericValue(a) == tripleNumber) == 2;
+            var num1Array = num1.ToString().Select(char.GetNumericValue).ToList();
+            var tripleNumber = default(int?);
+            for (var i = 0; i <= num1Array.Count - 2; i++)
+            {
+                if (num1Array[i] == num1Array[i + 1] && num1Array[i + 1] == num1Array[i + 2])
+                {
+                    tripleNumber = (int?)num1Array[i];
+                    break;
+                }
+            }
+
+            var num2Array = num2.ToString().Select(char.GetNumericValue).ToList();
+            var isTripleDouble = num2Array.Where((a, i) => a == tripleNumber && a == num2Array[i + 1]).Any();
             return isTripleDouble ? 1 : 0;
         }
     }
