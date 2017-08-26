@@ -73,20 +73,8 @@ namespace Kata20170826_TripleTrouble
     {
         public int TripleDouble(long num1, long num2)
         {
-            var num1Array = num1.ToString().Select(char.GetNumericValue).ToList();
-            var tripleNumber = default(int?);
-            for (var i = 0; i <= num1Array.Count - 2; i++)
-            {
-                if (num1Array[i] == num1Array[i + 1] && num1Array[i + 1] == num1Array[i + 2])
-                {
-                    tripleNumber = (int?)num1Array[i];
-                    break;
-                }
-            }
-
-            var num2Array = num2.ToString().Select(char.GetNumericValue).ToList();
-            var isTripleDouble = num2Array.Where((a, i) => a == tripleNumber && a == num2Array[i + 1]).Any();
-            return isTripleDouble ? 1 : 0;
+            return "0123456789".Count(num => num1.ToString().Contains(new string(num, 3)) &&
+                                      num2.ToString().Contains(new string(num, 2)));
         }
     }
 }
